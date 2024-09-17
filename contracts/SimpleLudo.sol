@@ -26,6 +26,7 @@ contract SimpleLudo{
     // mapping(address => player) public players;
 
     players[] Players;
+    
 
   
 
@@ -34,15 +35,28 @@ contract SimpleLudo{
 
         Players.push(players({
             playerAddress : msg.sender,
-            pawns: [start1, start2, start3, start4],
+            pawns: [0, 0, 0, BOARD_SIZE],
             hasWon: false
 
         }));
     }
 
-    function movePlayer() internal{
-        if(current_player == msg.sender){
-            current_player = address(uint256(current_player) ^0x1);
+    function movePlayer(uint8 diceValue) internal{
+         players storage player = players[msg.sender];
+
+        if (!player.hasStarted && diceValue == 6) {
+            player.hasStarted = true;
+        }
+
+       
+        if (player.hasStarted) {
+            player.position += diceValue;
+
+           
+            if (player.position >= BOARD_SIZE) {
+                player.position = BOARD_SIZE; 
+            }
+
         }
     } 
 
@@ -50,5 +64,9 @@ contract SimpleLudo{
         uint random = uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)));
         uint8 dice_value = uint8((random%6)+1);
         movePlayer(dice_value);
+
+
     }
+
+   
 }
