@@ -13,15 +13,16 @@ contract SimpleLudo{
         address playerAddress;
         uint[4] pawns;
         bool hasWon;
+        bool hasStarted;
+        uint position;
+        
     }
 
-    // mapping(address => player) public players;
+    mapping(address => players) public _players;
 
     players[] Players;
 
-    
 
-  
 
     function joinGame() public {
         require(!gameStarted, "gameStarted");
@@ -29,13 +30,15 @@ contract SimpleLudo{
         Players.push(players({
             playerAddress : msg.sender,
             pawns: [startLine, startLine, startLine, startLine],
-            hasWon: false
+            hasWon: false,
+            hasStarted: false,
+            position: 0
 
         }));
     }
 
     function movePlayer(uint8 diceValue) internal{
-         players storage player = players[msg.sender];
+         players memory player = _players[msg.sender];
 
         if (!player.hasStarted && diceValue == 6) {
             player.hasStarted = true;
