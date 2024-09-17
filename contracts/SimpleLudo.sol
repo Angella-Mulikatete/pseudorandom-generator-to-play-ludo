@@ -28,7 +28,7 @@ contract SimpleLudo{
 
         Players.push(players({
             playerAddress : msg.sender,
-            pawns: [startingPosition, startingPosition, startingPosition, startingPosition];
+            pawns: [startLine, startLine, startLine, startLine],
             hasWon: false
 
         }));
@@ -46,8 +46,8 @@ contract SimpleLudo{
             player.position += diceValue;
 
            
-            if (player.position >= BOARD_SIZE) {
-                player.position = BOARD_SIZE; 
+            if (player.position >= finishLine) {
+                player.position = finishLine; 
             }
 
         }
