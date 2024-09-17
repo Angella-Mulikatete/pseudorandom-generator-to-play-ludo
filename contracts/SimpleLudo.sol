@@ -2,30 +2,23 @@
 pragma solidity ^0.8.0;
 
 contract SimpleLudo{
-    uint constant public BOARD_SIZE = 52;
+    uint constant public finishLine = 52;
+     uint constant public startLine = 0;
     address current_player;
     bool gameStarted;
+    bool gameFinished;
+
 
     struct players{
         address playerAddress;
-        Pawns[] pawns;
+        uint[4] pawns;
         bool hasWon;
-    }
-
-    struct Pawns{
-        uint256 position;
-        bool isHome;
-    }
-
-    struct GameBoard{
-        uint startingPosition;
-        uint finishingPosition;
-        uint256[] safeSpaces;
     }
 
     // mapping(address => player) public players;
 
     players[] Players;
+
     
 
   
@@ -35,7 +28,7 @@ contract SimpleLudo{
 
         Players.push(players({
             playerAddress : msg.sender,
-            pawns: [0, 0, 0, BOARD_SIZE],
+            pawns: [startingPosition, startingPosition, startingPosition, startingPosition];
             hasWon: false
 
         }));
