@@ -35,3 +35,5 @@ const config: HardhatUserConfig = {
 };
 
 export default config;
+
+// SimpleLudoModule#SimpleLudo - 0x0D6728A8FA1d23f376dE8c35D3CeAbcB91E59EAc

@@ -37,7 +37,7 @@ contract SimpleLudo{
         }));
     }
 
-    function movePlayer(uint8 diceValue) internal{
+    function movePlayer(uint8 diceValue) internal view{
          players memory player = _players[msg.sender];
 
         if (!player.hasStarted && diceValue == 6) {
@@ -56,8 +56,8 @@ contract SimpleLudo{
         }
     } 
 
-    function rollDice() public{
-        uint random = uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)));
+    function rollDice() external view{
+        uint random = uint(keccak256(abi.encodePacked(block.timestamp, blockhash(block.number), msg.sender)));
         uint8 dice_value = uint8((random%6)+1);
         movePlayer(dice_value);
 
